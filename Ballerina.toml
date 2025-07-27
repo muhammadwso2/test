@@ -20,3 +20,4 @@ version = "2.2.0"
 org = "ballerinax"
 name = "snowflake.driver"
 version = "2.8.0"
+

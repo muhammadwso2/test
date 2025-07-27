@@ -1,0 +1,12 @@
+# Configuration for local development
+hostName = "localhost"
+snowflakeAccount = "MELBZZN-****"
+snowflakeUser = "MUHAMMAD"
+snowflakePassword = "*****"
+snowflakeDatabase = "COMPANY_DB"
+snowflakeWarehouse = "BALLERINA"
+snowflakeSchema = "PUBLIC"
+servicePort = 8080
+etlServicePort = 8082
+sapConcurPort = 8081
+sapConcurApiKey = "mock-api-key"

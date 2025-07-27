@@ -5,7 +5,7 @@ version = "0.1.0"
 distribution = "2201.12.7"
 description = "SAP Concur to Snowflake ETL Integration Service"
 keywords = ["etl", "snowflake", "sap-concur", "data-integration"]
-authors = ["Your Name <your.email@company.com>"]
+authors = ["Muhammad Ali <muhammad@wso2.com>"]
 license = ["Apache-2.0"]
 
 [build-options]

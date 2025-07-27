@@ -1,8 +1,8 @@
 # Configuration for local development
 hostName = "localhost"
-snowflakeAccount = "MELBZZN-YYB45887"
+snowflakeAccount = "MELBZZN-****"
 snowflakeUser = "MUHAMMAD"
-snowflakePassword = "3f2Uj8B3LGwikgZ"
+snowflakePassword = "****"
 snowflakeDatabase = "COMPANY_DB"
 snowflakeWarehouse = "BALLERINA"
 snowflakeSchema = "PUBLIC"

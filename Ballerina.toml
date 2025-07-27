@@ -2,7 +2,7 @@
 org = "snowflake_integration"
 name = "sap_concur_etl"
 version = "0.1.0"
-distribution = "2201.12.7"
+distribution = "2201.8.0"
 
 [build-options]
 observabilityIncluded = true

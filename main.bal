@@ -27,10 +27,10 @@ snowflake:Client snowflakeClient = check new (
 // Initialize HTTP client for Snowflake service using configurable host
 http:Client snowflakeServiceClient = check new (snowflakeServiceUrl);
 
-// ETL Service
+// ETL Service - Only expense-reports resource
 service /etl on new http:Listener(etlServicePort) {
 
-    // ETL endpoint - GET /etl/expense-reports (Modified to use HTTP clients)
+    // ETL endpoint - GET /etl/expense-reports (Only remaining resource)
     resource function get 'expense\-reports(string? employeeName, string? status, string? dateFrom, string? dateTo) returns EtlResponse {
         time:Utc startTime = time:utcNow();
         string processedAt = time:utcToString(startTime);
@@ -116,84 +116,6 @@ service /etl on new http:Listener(etlServicePort) {
         }
         
         return etlResponse;
-    }
-
-    // Get ETL status - GET /etl/status
-    resource function get status() returns record {|string status; string message; string host;|} {
-        return {
-            status: "UP",
-            message: "ETL Service is running",
-            host: hostName + ":" + etlServicePort.toString()
-        };
-    }
-
-    // Get expense reports from Snowflake - GET /etl/reports
-    resource function get reports(string? employeeName, string? status) returns TransformedExpenseReport[]|ApiResponse {
-        do {
-            sql:ParameterizedQuery selectQuery;
-            
-            if employeeName is string && status is string {
-                selectQuery = `SELECT report_id, employee_name, amount, currency, submitted_date, status, processed_date 
-                              FROM expense_reports WHERE employee_name = ${employeeName} AND status = ${status}`;
-            } else if employeeName is string {
-                selectQuery = `SELECT report_id, employee_name, amount, currency, submitted_date, status, processed_date 
-                              FROM expense_reports WHERE employee_name = ${employeeName}`;
-            } else if status is string {
-                selectQuery = `SELECT report_id, employee_name, amount, currency, submitted_date, status, processed_date 
-                              FROM expense_reports WHERE status = ${status}`;
-            } else {
-                selectQuery = `SELECT report_id, employee_name, amount, currency, submitted_date, status, processed_date 
-                              FROM expense_reports ORDER BY processed_date DESC`;
-            }
-            
-            stream<TransformedExpenseReport, sql:Error?> resultStream = snowflakeClient->query(selectQuery);
-            
-            TransformedExpenseReport[] results = [];
-            check from TransformedExpenseReport result in resultStream
-                do {
-                    results.push(result);
-                };
-            
-            return results;
-        } on fail error e {
-            return {
-                success: false,
-                message: "Failed to retrieve expense reports: " + e.message()
-            };
-        }
-    }
-
-    // Agent management endpoints
-    resource function post agents/'start() returns ApiResponse {
-        do {
-            check startAllAgents();
-            return {
-                success: true,
-                message: "All agents started successfully"
-            };
-        } on fail error e {
-            return {
-                success: false,
-                message: "Failed to start agents: " + e.message()
-            };
-        }
-    }
-
-    resource function post agents/'stop() returns ApiResponse {
-        stopAllAgents();
-        return {
-            success: true,
-            message: "All agents stopped successfully"
-        };
-    }
-
-    resource function get agents/status() returns record {|anydata etlAgent; anydata qualityAgent; string host;|} {
-        record {|anydata etlAgent; anydata qualityAgent;|} agentStatuses = getAgentStatuses();
-        return {
-            etlAgent: agentStatuses.etlAgent,
-            qualityAgent: agentStatuses.qualityAgent,
-            host: hostName + ":" + etlServicePort.toString()
-        };
     }
 }
 

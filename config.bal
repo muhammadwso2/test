@@ -1,5 +1,5 @@
-// Host configuration - configurable property for localhost
-configurable string hostName = "localhost";
+// Host configuration - configurable property for cloud deployment
+configurable string hostName = "0.0.0.0";
 
 // Configurable variables for Snowflake connection
 configurable string snowflakeAccount = ?;
@@ -15,8 +15,8 @@ configurable int etlServicePort = 8082;
 configurable int sapConcurPort = 8081;
 
 // SAP Concur API configuration - using configurable host
-configurable string sapConcurUrl = "http://" + hostName + ":" + sapConcurPort.toString() + "/sap-concur";
+configurable string sapConcurUrl = "http://localhost:" + sapConcurPort.toString() + "/sap-concur";
 configurable string sapConcurApiKey = "mock-api-key";
 
 // Snowflake service URL - using configurable host
-configurable string snowflakeServiceUrl = "http://" + hostName + ":" + servicePort.toString();
+configurable string snowflakeServiceUrl = "http://localhost:" + servicePort.toString();

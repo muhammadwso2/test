@@ -7,12 +7,6 @@ distribution = "2201.8.0"
 [build-options]
 observabilityIncluded = true
 
-# Package description and metadata
-description = "SAP Concur to Snowflake ETL Integration Service"
-keywords = ["etl", "snowflake", "sap-concur", "data-integration"]
-authors = ["Muhammad Ali <muhammad@wso2.com>"]
-license = "Apache-2.0"
-
 [[dependency]]
 org = "ballerinax"
 name = "snowflake"

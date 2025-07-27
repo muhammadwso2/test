@@ -2,7 +2,11 @@
 org = "snowflake_integration"
 name = "sap_concur_etl"
 version = "0.1.0"
-distribution = "2201.8.0"
+distribution = "2201.12.7"
+description = "SAP Concur to Snowflake ETL Integration Service"
+keywords = ["etl", "snowflake", "sap-concur", "data-integration"]
+authors = ["Muhammad Ali <muhammad@wso2.com>"]
+license = ["Apache-2.0"]
 
 [build-options]
 observabilityIncluded = true
